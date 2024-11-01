@@ -11,14 +11,12 @@ public struct ConversionBuilder {
     Conversions.Identity()
   }
 
-  public static func buildPartialBlock<C: Conversion>(first conversion: C) -> C {
-      conversion
+  public static func buildPartialBlock<C: AsyncConversion>(first conversion: C) -> C {
+    conversion
   }
 
-  public static func buildPartialBlock<C1: Conversion, C2: Conversion>
+  public static func buildPartialBlock<C1: AsyncConversion, C2: AsyncConversion>
   (accumulated c1: C1, next c2: C2) -> Conversions.Map<C1, C2> where C1.Output == C2.Input {
     Conversions.Map(upstream: c1, downstream: c2)
   }
 }
-
-
