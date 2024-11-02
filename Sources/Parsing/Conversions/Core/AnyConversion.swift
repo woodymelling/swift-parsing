@@ -121,6 +121,15 @@ public struct AnyConversion<Input, Output>: Conversion {
     self._unapply = conversion.unapply
   }
 
+  @inlinable
+  public init(
+    apply: @Sendable @escaping (Input) throws -> Output,
+    unapply: @Sendable @escaping (Output) throws -> Input
+  ) {
+    self._apply = apply
+    self._unapply = unapply
+  }
+
   /// Creates a conversion that wraps the given closures in its ``apply(_:)`` and ``unapply(_:)``
   /// methods, throwing an error when `nil` is returned.
   ///

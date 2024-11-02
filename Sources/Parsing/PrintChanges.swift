@@ -10,7 +10,7 @@ import CustomDump
 
 extension Conversion {
     func _printChanges() -> some Conversion<Input, Output> {
-        Convert(
+        AnyConversion(
             apply: {
                 customDump($0, name: "Before \(Self.self).apply")
                 let result = try self.apply($0)
