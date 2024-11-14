@@ -6,17 +6,21 @@
 //
 
 @resultBuilder
-public struct ConversionBuilder {
+public enum ConversionBuilder{
   public static func buildBlock<T>() -> Conversions.Identity<T> {
     Conversions.Identity()
   }
-
   public static func buildPartialBlock<C: AsyncConversion>(first conversion: C) -> C {
     conversion
   }
 
-  public static func buildPartialBlock<C1: AsyncConversion, C2: AsyncConversion>
-  (accumulated c1: C1, next c2: C2) -> Conversions.Map<C1, C2> where C1.Output == C2.Input {
-    Conversions.Map(upstream: c1, downstream: c2)
+  public static func buildPartialBlock<
+    C0: AsyncConversion,
+    C1: AsyncConversion
+  >(
+    accumulated c0: C0,
+    next c1: C1
+  ) -> Conversions.Map<C0, C1> where C0.Output == C1.Input {
+    Conversions.Map(upstream: c0, downstream: c1)
   }
 }

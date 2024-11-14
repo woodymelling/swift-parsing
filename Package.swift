@@ -19,12 +19,16 @@ let package = Package(
   dependencies: [
     .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0"),
     .package(url: "https://github.com/pointfreeco/swift-case-paths", from: "1.0.0"),
+    .package(url: "https://github.com/pointfreeco/swift-custom-dump", from: "1.3.3"),
     .package(url: "https://github.com/google/swift-benchmark", from: "0.1.1"),
   ],
   targets: [
     .target(
       name: "Parsing",
-      dependencies: [.product(name: "CasePaths", package: "swift-case-paths")]
+      dependencies: [
+        .product(name: "CasePaths", package: "swift-case-paths"),
+        .product(name: "CustomDump", package: "swift-custom-dump")
+      ]
     ),
     .testTarget(
       name: "ParsingTests",
