@@ -34,7 +34,10 @@ let package = Package(
       swiftSettings: [.swiftLanguageMode(.v5)]
     ),
     .target(
-      name: "Conversions"
+      name: "Conversions",
+      dependencies: [
+        .product(name: "CustomDump", package: "swift-custom-dump")
+      ]
     ),
     .testTarget(
       name: "ParsingTests",
