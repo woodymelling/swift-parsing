@@ -5,7 +5,7 @@
 ///
 /// Useful in bidirectionally tranforming types, like when writing something to the disk.
 /// printability via ``Parser/map(_:)-18m9d``.
-@rethrows public protocol AsyncConversion<Input, Output> {
+@rethrows public protocol AsyncConversion<Input, Output>: Sendable {
   // The type of values this conversion converts from.
   associatedtype Input
 

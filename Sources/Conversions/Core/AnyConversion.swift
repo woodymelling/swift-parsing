@@ -53,8 +53,8 @@ extension Conversion {
   /// - Returns: A conversion that invokes the given apply and unapply functions.
   @inlinable
   public static func convert<Input, Output>(
-    apply: @escaping (Input) -> Output?,
-    unapply: @escaping (Output) -> Input?
+    apply: @Sendable @escaping (Input) -> Output?,
+    unapply: @Sendable @escaping (Output) -> Input?
   ) -> Self where Self == AnyConversion<Input, Output> {
     .init(apply: apply, unapply: unapply)
   }
@@ -107,10 +107,10 @@ extension Conversion {
 /// instead create custom types that conform to the ``Conversion`` protocol.
 public struct AnyConversion<Input, Output>: Conversion {
   @usableFromInline
-  let _apply: (Input) throws -> Output
+    let _apply: @Sendable (Input) throws -> Output
 
   @usableFromInline
-  let _unapply: (Output) throws -> Input
+    let _unapply: @Sendable (Output) throws -> Input
 
   /// Creates a type-erasing conversion to wrap the given conversion.
   ///
@@ -142,8 +142,8 @@ public struct AnyConversion<Input, Output>: Conversion {
   ///     returns `nil`, an error is thrown. Otherwise, the value is unwrapped.
   @inlinable
   public init(
-    apply: @escaping (Input) -> Output?,
-    unapply: @escaping (Output) -> Input?
+    apply: @escaping @Sendable (Input) -> Output?,
+    unapply: @escaping @Sendable (Output) -> Input?
   ) {
     self._apply = {
       guard let value = apply($0)

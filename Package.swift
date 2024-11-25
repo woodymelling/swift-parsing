@@ -1,11 +1,11 @@
-// swift-tools-version:5.11
+// swift-tools-version:6.0
 
 import PackageDescription
 
 let package = Package(
   name: "swift-parsing",
   platforms: [
-    .iOS(.v13),
+    .iOS(.v18),
     .macOS(.v14),
     .tvOS(.v13),
     .watchOS(.v6),
@@ -14,7 +14,8 @@ let package = Package(
     .library(
       name: "Parsing",
       targets: ["Parsing"]
-    )
+    ),
+    .library(name: "Conversions", targets: ["Parsing"])
   ],
   dependencies: [
     .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0"),
@@ -27,8 +28,13 @@ let package = Package(
       name: "Parsing",
       dependencies: [
         .product(name: "CasePaths", package: "swift-case-paths"),
-        .product(name: "CustomDump", package: "swift-custom-dump")
-      ]
+        .product(name: "CustomDump", package: "swift-custom-dump"),
+        .target(name: "Conversions")
+      ],
+      swiftSettings: [.swiftLanguageMode(.v5)]
+    ),
+    .target(
+      name: "Conversions"
     ),
     .testTarget(
       name: "ParsingTests",

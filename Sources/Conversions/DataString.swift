@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Conversions
 
 extension Conversions {
     public struct DataToString: Conversion {
