@@ -53,8 +53,8 @@ extension Conversion {
   /// - Returns: A conversion that invokes the given apply and unapply functions.
   @inlinable
   public static func convert<Input, Output>(
-    apply: @Sendable @escaping (Input) -> Output?,
-    unapply: @Sendable @escaping (Output) -> Input?
+    apply: @escaping (Input) -> Output?,
+    unapply: @escaping (Output) -> Input?
   ) -> Self where Self == AnyConversion<Input, Output> {
     .init(apply: apply, unapply: unapply)
   }
@@ -107,10 +107,10 @@ extension Conversion {
 /// instead create custom types that conform to the ``Conversion`` protocol.
 public struct AnyConversion<Input, Output>: Conversion {
   @usableFromInline
-    let _apply: @Sendable (Input) throws -> Output
+    let _apply: (Input) throws -> Output
 
   @usableFromInline
-    let _unapply: @Sendable (Output) throws -> Input
+    let _unapply: (Output) throws -> Input
 
   /// Creates a type-erasing conversion to wrap the given conversion.
   ///
@@ -121,10 +121,19 @@ public struct AnyConversion<Input, Output>: Conversion {
     self._unapply = conversion.unapply
   }
 
+
+  /// Creates a conversion that wraps the given closures in its ``apply(_:)`` and ``unapply(_:)``
+  /// methods
+  ///
+  /// - Parameters:
+  ///   - apply: A closure that attempts to convert an input into an output. `apply` is executed
+  ///     each time the ``apply(_:)`` method is called on the resulting conversion
+  ///   - unapply: A closure that attempts to convert an output into an input. `unapply` is executed
+  ///     each time the ``unapply(_:)`` method is called on the resulting conversion.
   @inlinable
   public init(
-    apply: @Sendable @escaping (Input) throws -> Output,
-    unapply: @Sendable @escaping (Output) throws -> Input
+    apply: @escaping (Input) throws -> Output,
+    unapply: @escaping (Output) throws -> Input
   ) {
     self._apply = apply
     self._unapply = unapply
@@ -142,8 +151,8 @@ public struct AnyConversion<Input, Output>: Conversion {
   ///     returns `nil`, an error is thrown. Otherwise, the value is unwrapped.
   @inlinable
   public init(
-    apply: @escaping @Sendable (Input) -> Output?,
-    unapply: @escaping @Sendable (Output) -> Input?
+    apply: @escaping (Input) -> Output?,
+    unapply: @escaping (Output) -> Input?
   ) {
     self._apply = {
       guard let value = apply($0)

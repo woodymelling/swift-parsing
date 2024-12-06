@@ -1,4 +1,4 @@
-extension AsyncConversion {
+extension Conversion {
   /// Returns a conversion that transforms the output of this conversion with a given downstream
   /// conversion.
   ///
@@ -28,7 +28,7 @@ extension Conversions {
   ///
   /// You will not typically need to interact with this type directly. Instead you will usually use
   /// the ``Conversion/map(_:)`` operation, which constructs this type.
-  public struct Map<Upstream: AsyncConversion, Downstream: AsyncConversion>: AsyncConversion
+  public struct Map<Upstream: Conversion, Downstream: Conversion>: Conversion
   where Upstream.Output == Downstream.Input {
     public let upstream: Upstream
     public let downstream: Downstream
@@ -41,31 +41,16 @@ extension Conversions {
 
     @inlinable
     @inline(__always)
-    public func apply(_ input: Upstream.Input) async rethrows -> Downstream.Output {
-      try await self.downstream.apply(self.upstream.apply(input))
+    public func apply(_ input: Upstream.Input) rethrows -> Downstream.Output {
+      try self.downstream.apply(self.upstream.apply(input))
     }
 
     @inlinable
     @inline(__always)
-    public func unapply(_ output: Downstream.Output) async rethrows -> Upstream.Input {
-      try await self.upstream.unapply(self.downstream.unapply(output))
+    public func unapply(_ output: Downstream.Output) rethrows -> Upstream.Input {
+      try self.upstream.unapply(self.downstream.unapply(output))
     }
   }
 }
-
-extension Conversions.Map: Conversion where Upstream: Conversion, Downstream: Conversion {
-  @inlinable
-  @inline(__always)
-  public func apply(_ input: Upstream.Input) rethrows -> Downstream.Output {
-    try self.downstream.apply(self.upstream.apply(input))
-  }
-
-  @inlinable
-  @inline(__always)
-  public func unapply(_ output: Downstream.Output) rethrows -> Upstream.Input {
-    try self.upstream.unapply(self.downstream.unapply(output))
-  }
-}
-
 
 

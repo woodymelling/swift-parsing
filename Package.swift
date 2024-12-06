@@ -1,12 +1,12 @@
-// swift-tools-version:6.0
+// swift-tools-version:5.7
 
 import PackageDescription
 
 let package = Package(
   name: "swift-parsing",
   platforms: [
-    .iOS(.v18),
-    .macOS(.v14),
+    .iOS(.v13),
+    .macOS(.v10_15),
     .tvOS(.v13),
     .watchOS(.v6),
   ],
@@ -30,8 +30,7 @@ let package = Package(
         .product(name: "CasePaths", package: "swift-case-paths"),
         .product(name: "CustomDump", package: "swift-custom-dump"),
         .target(name: "Conversions")
-      ],
-      swiftSettings: [.swiftLanguageMode(.v5)]
+      ]
     ),
     .target(
       name: "Conversions",

@@ -10,13 +10,13 @@ public enum ConversionBuilder{
   public static func buildBlock<T>() -> Conversions.Identity<T> {
     Conversions.Identity()
   }
-  public static func buildPartialBlock<C: AsyncConversion>(first conversion: C) -> C {
+  public static func buildPartialBlock<C: Conversion>(first conversion: C) -> C {
     conversion
   }
 
   public static func buildPartialBlock<
-    C0: AsyncConversion,
-    C1: AsyncConversion
+    C0: Conversion,
+    C1: Conversion
   >(
     accumulated c0: C0,
     next c1: C1

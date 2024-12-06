@@ -6,7 +6,7 @@
 //
 
 extension Conversions {
-  public struct Inverted<C: AsyncConversion>: AsyncConversion {
+  public struct Inverted<C: Conversion>: Conversion {
     public var conversion: C
 
     @inlinable
@@ -16,29 +16,15 @@ extension Conversions {
 
     @inlinable
     @inline(__always)
-    public func apply(_ input: C.Output) async throws -> C.Input {
-      try await conversion.unapply(input)
+    public func apply(_ input: C.Output) throws -> C.Input {
+      try conversion.unapply(input)
     }
 
     @inlinable
     @inline(__always)
-    public func unapply(_ output: C.Input) async throws -> C.Output {
-      try await conversion.apply(output)
+    public func unapply(_ output: C.Input) throws -> C.Output {
+      try conversion.apply(output)
     }
-  }
-}
-
-extension Conversions.Inverted: Conversion where C: Conversion {
-  @inlinable
-  @inline(__always)
-  public func apply(_ input: C.Output) throws -> C.Input {
-    try conversion.unapply(input)
-  }
-
-  @inlinable
-  @inline(__always)
-  public func unapply(_ output: C.Input) throws -> C.Output {
-    try conversion.apply(output)
   }
 }
 
