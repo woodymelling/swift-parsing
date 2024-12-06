@@ -10,24 +10,24 @@
 extension Conversions {
   public struct MapValues<C: Conversion>: Conversion {
     var transform: C
-
+    
     public init(_ transform: C) {
       self.transform = transform
     }
-
+    
     public init(@ConversionBuilder _ build: () -> C) {
       self.transform = build()
     }
-
+    
     public func apply(_ input: [C.Input]) throws -> [C.Output] {
       try input.map(transform.apply)
     }
-
+    
     public func unapply(_ output: [C.Output]) throws -> [C.Input] {
       try output.map(transform.unapply)
     }
   }
-
+  
 }
 
 
@@ -41,22 +41,22 @@ extension Conversions {
   {
     public typealias Input = [KeyConversion.Input: ValueConversion.Input]
     public typealias Output = [KeyConversion.Output: ValueConversion.Output]
-
+    
     var keyConversion: KeyConversion
     var valueConversion: ValueConversion
-
+    
     public init(keyConversion: KeyConversion, valueConversion: ValueConversion) {
       self.keyConversion = keyConversion
       self.valueConversion = valueConversion
     }
-
+    
     public func apply(_ input: Input) throws -> Output {
       try input.mapKVPairs(
         keyConversion.apply,
         valueConversion.apply
       )
     }
-
+    
     public func unapply(_ output: Output) throws -> Input {
       try output.mapKVPairs(
         keyConversion.unapply,
@@ -90,13 +90,13 @@ extension Sequence {
           try await (value: transform(element), offset: id)
         }
       }
-
+      
       var array: [(value: T, offset: Int)] = []
       array.reserveCapacity(self.underestimatedCount)
       for try await result in group {
         array.append(result)
       }
-
+      
       // Could this sort be avoided somehow? Maybe with an OrderedDictionary?
       return array.sorted { lhs, rhs in
         lhs.offset < rhs.offset
@@ -104,5 +104,5 @@ extension Sequence {
       .map(\.value)
     }
   }
-
+  
 }
