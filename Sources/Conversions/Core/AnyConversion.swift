@@ -107,10 +107,10 @@ extension Conversion {
 /// instead create custom types that conform to the ``Conversion`` protocol.
 public struct AnyConversion<Input, Output>: Conversion {
   @usableFromInline
-    let _apply: (Input) throws -> Output
+  let _apply: (Input) throws -> Output
 
   @usableFromInline
-    let _unapply: (Output) throws -> Input
+  let _unapply: (Output) throws -> Input
 
   /// Creates a type-erasing conversion to wrap the given conversion.
   ///
