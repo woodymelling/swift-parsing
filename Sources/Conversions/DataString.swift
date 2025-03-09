@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 extension Conversions {
   public struct DataToString: Conversion {
     public typealias Input = Data
@@ -17,7 +16,7 @@ extension Conversions {
     public func apply(_ input: Data) -> String {
       String(decoding: input, as: UTF8.self)
     }
-    
+
     public func unapply(_ output: String) -> Data {
       Data(output.utf8)
     }

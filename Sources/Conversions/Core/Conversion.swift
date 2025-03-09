@@ -1,4 +1,3 @@
-
 /// Declares a type that can asynchronously transform an `Input` value into an `Output` value *and* transform an
 /// `Output` value back into an `Input` value.
 ///

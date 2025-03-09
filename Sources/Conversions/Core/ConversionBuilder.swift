@@ -6,7 +6,7 @@
 //
 
 @resultBuilder
-public enum ConversionBuilder{
+public enum ConversionBuilder {
   public static func buildBlock<T>() -> Conversions.Identity<T> {
     Conversions.Identity()
   }

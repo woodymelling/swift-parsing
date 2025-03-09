@@ -15,7 +15,7 @@ let package = Package(
       name: "Parsing",
       targets: ["Parsing"]
     ),
-    .library(name: "Conversions", targets: ["Parsing"])
+    .library(name: "Conversions", targets: ["Parsing"]),
   ],
   dependencies: [
     .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0"),
@@ -29,14 +29,14 @@ let package = Package(
       dependencies: [
         .product(name: "CasePaths", package: "swift-case-paths"),
         .product(name: "CustomDump", package: "swift-custom-dump"),
-        .target(name: "Conversions")
+        .target(name: "Conversions"),
       ]
     ),
     .target(
       name: "Conversions",
       dependencies: [
         .product(name: "CustomDump", package: "swift-custom-dump"),
-        .product(name: "CasePaths", package: "swift-case-paths")
+        .product(name: "CasePaths", package: "swift-case-paths"),
       ]
     ),
     .testTarget(

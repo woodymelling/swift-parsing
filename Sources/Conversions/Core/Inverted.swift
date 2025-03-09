@@ -28,10 +28,10 @@ extension Conversions {
   }
 }
 
-public extension Conversion {
+extension Conversion {
   @inlinable
   @inline(__always)
-  func inverted() -> Conversions.Inverted<Self> {
+  public func inverted() -> Conversions.Inverted<Self> {
     Conversions.Inverted(self)
   }
 }

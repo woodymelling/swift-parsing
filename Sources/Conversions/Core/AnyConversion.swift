@@ -121,7 +121,6 @@ public struct AnyConversion<Input, Output>: Conversion {
     self._unapply = conversion.unapply
   }
 
-
   /// Creates a conversion that wraps the given closures in its ``apply(_:)`` and ``unapply(_:)``
   /// methods
   ///

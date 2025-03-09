@@ -129,7 +129,7 @@ extension Conversions {
     let initializer: @Sendable (Values) -> Struct
 
     @usableFromInline
-      init(initializer: @escaping @Sendable (Values) -> Struct) {
+    init(initializer: @escaping @Sendable (Values) -> Struct) {
       self.initializer = initializer
     }
 
